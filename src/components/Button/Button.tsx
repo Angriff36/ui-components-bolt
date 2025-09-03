@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '../../utils/cn';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
@@ -7,6 +8,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -14,6 +16,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     className,
     variant = 'primary',
     size = 'md',
+    rounded = 'lg',
     loading = false,
     disabled,
     children,
@@ -25,7 +28,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseClasses = [
       // Base button styles - mobile-first with 44px touch target
       'inline-flex items-center justify-center gap-2',
-      'rounded-lg font-medium transition-all duration-200',
+      'font-medium transition-all duration-200',
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
       'disabled:opacity-50 disabled:cursor-not-allowed',
       'active:scale-95 touch-manipulation', // iOS active state
@@ -34,38 +37,42 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'select-none',
       // Ensure proper stacking
       'relative overflow-hidden',
+      // Better focus styles
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
     ];
 
     const variantClasses = {
       primary: [
-        'bg-blue-600 text-white shadow-sm',
-        'hover:bg-blue-700 focus:ring-blue-500',
-        'active:bg-blue-800',
+        'bg-emerald-600 text-white shadow-sm',
+        'hover:bg-emerald-700 focus-visible:ring-emerald-500',
+        'active:bg-emerald-800',
+        'disabled:bg-emerald-300',
       ],
       secondary: [
         'bg-gray-100 text-gray-900 shadow-sm',
-        'hover:bg-gray-200 focus:ring-gray-500',
+        'hover:bg-gray-200 focus-visible:ring-gray-500',
         'active:bg-gray-300',
         'dark:bg-gray-800 dark:text-gray-100',
         'dark:hover:bg-gray-700 dark:active:bg-gray-600',
       ],
       outline: [
         'border border-gray-300 bg-white text-gray-700 shadow-sm',
-        'hover:bg-gray-50 focus:ring-gray-500',
+        'hover:bg-gray-50 focus-visible:ring-gray-500',
         'active:bg-gray-100',
         'dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300',
         'dark:hover:bg-gray-800 dark:active:bg-gray-700',
       ],
       ghost: [
         'text-gray-700 hover:bg-gray-100',
-        'focus:ring-gray-500 active:bg-gray-200',
+        'focus-visible:ring-gray-500 active:bg-gray-200',
         'dark:text-gray-300 dark:hover:bg-gray-800',
         'dark:active:bg-gray-700',
       ],
       destructive: [
         'bg-red-600 text-white shadow-sm',
-        'hover:bg-red-700 focus:ring-red-500',
+        'hover:bg-red-700 focus-visible:ring-red-500',
         'active:bg-red-800',
+        'disabled:bg-red-300',
       ],
     };
 
@@ -76,26 +83,36 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       xl: 'px-8 py-4 text-lg min-h-[52px]', // XL for hero buttons
     };
 
+    const roundedClasses = {
+      none: 'rounded-none',
+      sm: 'rounded-sm',
+      md: 'rounded-md',
+      lg: 'rounded-lg',
+      full: 'rounded-full',
+    };
+
     const widthClasses = fullWidth ? 'w-full' : '';
 
-    const combinedClasses = [
+    const combinedClasses = cn([
       ...baseClasses,
       ...(variantClasses[variant] || []),
       ...(sizeClasses[size] || []),
+      roundedClasses[rounded],
       widthClasses,
       className
-    ].filter(Boolean).join(' ');
+    ]);
 
     return (
       <button
         className={combinedClasses}
         disabled={disabled || loading}
         ref={ref}
+        aria-disabled={disabled || loading}
         {...props}
       >
         {/* Loading spinner */}
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-inherit rounded-lg">
+          <div className={cn("absolute inset-0 flex items-center justify-center bg-inherit", roundedClasses[rounded])}>
             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
           </div>
         )}

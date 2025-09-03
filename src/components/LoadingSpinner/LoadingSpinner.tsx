@@ -1,14 +1,21 @@
 import React from 'react';
+import { cn } from '../../utils/cn';
 
 export interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   color?: 'primary' | 'secondary' | 'white' | 'gray';
+  thickness?: 'thin' | 'normal' | 'thick';
+  text?: string;
+  centered?: boolean;
   className?: string;
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size = 'md',
   color = 'primary',
+  thickness = 'normal',
+  text,
+  centered = false,
   className = '',
 }) => {
   const sizeClasses = {
@@ -19,22 +26,57 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   };
 
   const colorClasses = {
-    primary: 'border-blue-500',
+    primary: 'border-emerald-500',
     secondary: 'border-gray-500',
     white: 'border-white',
     gray: 'border-gray-400',
   };
 
-  const combinedClasses = [
-    'border-2 border-t-transparent rounded-full animate-spin',
+  const thicknessClasses = {
+    thin: 'border',
+    normal: 'border-2',
+    thick: 'border-4',
+  };
+
+  const spinnerClasses = cn([
+    'border-t-transparent rounded-full animate-spin',
     sizeClasses[size],
     colorClasses[color],
+    thicknessClasses[thickness],
+  ]);
+
+  const containerClasses = cn([
+    centered ? 'flex flex-col items-center justify-center gap-2' : 'inline-flex items-center gap-2',
     className
-  ].filter(Boolean).join(' ');
+  ]);
+
+  const content = (
+    <>
+      <div
+        className={spinnerClasses}
+        role="status"
+        aria-label={text || "Loading"}
+      />
+      {text && (
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {text}
+        </span>
+      )}
+      <span className="sr-only">{text || "Loading..."}</span>
+    </>
+  );
+
+  if (text || centered) {
+    return (
+      <div className={containerClasses}>
+        {content}
+      </div>
+    );
+  }
 
   return (
     <div
-      className={combinedClasses}
+      className={spinnerClasses}
       role="status"
       aria-label="Loading"
     >

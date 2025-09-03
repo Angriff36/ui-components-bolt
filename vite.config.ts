@@ -1,13 +1,21 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')
+    }
+  },
   build: {
     lib: {
-      entry: 'src/index.ts',
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'PrepChefUIComponents',
       formats: ['es'],
-      fileName: 'index',
+      fileName: (format) => `index.${format}.js`,
     },
+    sourcemap: true,
+    minify: 'esbuild',
     rollupOptions: {
       external: ['react', 'react-dom', 'tailwindcss', 'lucide-react'],
       output: {
@@ -16,7 +24,14 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'lucide-react': 'LucideReact',
         },
+        exports: 'named',
       },
     },
+    emptyOutDir: true,
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+  }
 });

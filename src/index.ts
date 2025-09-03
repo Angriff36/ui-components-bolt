@@ -7,3 +7,12 @@ export type { CardProps, CardHeaderProps, CardContentProps, CardFooterProps } fr
 
 export { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
 export type { LoadingSpinnerProps } from './components/LoadingSpinner/LoadingSpinner';
+
+export { Input } from './components/Input/Input';
+export type { InputProps } from './components/Input/Input';
+
+export { Badge } from './components/Badge/Badge';
+export type { BadgeProps } from './components/Badge/Badge';
+
+// Utilities
+export { cn } from './utils/cn';
