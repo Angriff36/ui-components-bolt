@@ -1,7 +1,27 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
-export default defineConfig({
+export default defineConfig(({ command, mode }) => {
+  // Development configuration for component preview
+  if (command === 'serve') {
+    return {
+      plugins: [react()],
+      root: './demo',
+      resolve: {
+        alias: {
+          '@': resolve(__dirname, './src')
+        }
+      },
+      server: {
+        port: 3001,
+        open: true
+      }
+    };
+  }
+
+  // Build configuration for library
+  return {
   resolve: {
     alias: {
       '@': resolve(__dirname, './src')
@@ -34,4 +54,5 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
   }
+  };
 });
