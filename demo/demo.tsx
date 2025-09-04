@@ -26,7 +26,8 @@ import {
   Video,
   Utensils,
   Clock,
-  Users
+  Users,
+  X
 } from 'lucide-react';
 
 function ComponentDemo() {
