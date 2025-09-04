@@ -14,5 +14,8 @@ export type { InputProps } from './components/Input/Input';
 export { Badge } from './components/Badge/Badge';
 export type { BadgeProps } from './components/Badge/Badge';
 
+export { FileUpload } from './components/FileUpload/FileUpload';
+export type { FileUploadProps } from './components/FileUpload/FileUpload';
+
 // Utilities
 export { cn } from './utils/cn';

@@ -12,9 +12,6 @@ export default defineConfig(({ command, mode }) => {
     return {
       plugins: [react()],
       root: './demo',
-      define: {
-        'process.env.npm_package_version': JSON.stringify(packageJson.version)
-      },
       resolve: {
         alias: {
           '@': resolve(__dirname, './src')
