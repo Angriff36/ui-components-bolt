@@ -100,11 +100,14 @@ function ComponentDemo() {
             <div className="flex gap-2">
               <Button
                 variant="primary"
-                onClick={() => setShowAddRecipe(!showAddRecipe)}
+                onClick={() => {
+                  console.log('Add Recipe clicked, current state:', showAddRecipe);
+                  setShowAddRecipe(!showAddRecipe);
+                }}
                 icon={<Plus className="w-4 h-4" />}
                 size="sm"
               >
-                Add Recipe
+                {showAddRecipe ? 'Cancel' : 'Add Recipe'}
               </Button>
               <Button
                 variant="ghost"
