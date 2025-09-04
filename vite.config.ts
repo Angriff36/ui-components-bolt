@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { readFileSync } from 'fs';
+
+// Read version from package.json
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'));
 
 export default defineConfig(({ command, mode }) => {
   // Development configuration for component preview
@@ -8,6 +12,9 @@ export default defineConfig(({ command, mode }) => {
     return {
       plugins: [react()],
       root: './demo',
+      define: {
+        'process.env.npm_package_version': JSON.stringify(packageJson.version)
+      },
       resolve: {
         alias: {
           '@': resolve(__dirname, './src')
