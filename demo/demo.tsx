@@ -90,13 +90,18 @@ function ComponentDemo() {
 
   return (
     <div className={`min-h-screen transition-colors ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-500 bg-clip-text text-transparent mb-2">
               🍳 Prep Chef UI Components
             </h1>
+              <p className="text-xl text-gray-600 dark:text-gray-300">
+                Interactive component library for recipe management
+              </p>
+            </div>
             <div className="flex gap-2">
               <Button
                 variant="primary"
@@ -118,18 +123,15 @@ function ComponentDemo() {
               </Button>
             </div>
           </div>
-          <p className="text-gray-600 dark:text-gray-300">
-            Interactive component library for recipe management
-          </p>
         </div>
 
         {/* Add Recipe Form */}
         {showAddRecipe && (
-          <section className="mb-8">
-            <Card variant="elevated">
+          <section className="mb-12">
+            <Card variant="elevated" className="max-w-4xl mx-auto">
               <CardHeader 
-                title="Add New Recipe" 
-                subtitle="Create a delicious new recipe"
+                title="✨ Add New Recipe" 
+                subtitle="Create a delicious new recipe and share it with the community"
                 action={
                   <Button 
                     variant="ghost" 
@@ -141,55 +143,62 @@ function ComponentDemo() {
                 }
               />
               <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
+                <div className="grid lg:grid-cols-3 gap-8">
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="grid gap-4">
                     <Input
                       label="Recipe Name"
-                      placeholder="e.g., Grandma's Chocolate Chip Cookies"
+                      placeholder="e.g., Grandma's Famous Chocolate Chip Cookies"
                       value={formData.recipeName}
                       onChange={(e) => setFormData({...formData, recipeName: e.target.value})}
                       leftIcon={<Utensils className="w-4 h-4" />}
+                      variant="filled"
+                      inputSize="lg"
                     />
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                       <Input
                         label="Cook Time"
-                        placeholder="30 mins"
+                        placeholder="e.g., 30 mins"
                         value={formData.cookTime}
                         onChange={(e) => setFormData({...formData, cookTime: e.target.value})}
                         leftIcon={<Clock className="w-4 h-4" />}
-                        inputSize="sm"
+                        variant="filled"
                       />
                       <Input
                         label="Servings"
                         type="number"
-                        placeholder="4"
+                        placeholder="e.g., 4"
                         value={formData.servings}
                         onChange={(e) => setFormData({...formData, servings: e.target.value})}
                         leftIcon={<Users className="w-4 h-4" />}
-                        inputSize="sm"
+                        variant="filled"
                       />
                     </div>
                   </div>
                   
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Recipe Media
+                  <div className="lg:col-span-1">
+                    <label className="block text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+                      📸 Recipe Media
                     </label>
                     <FileUpload
                       variant="recipe"
                       accept="image/*,video/*"
                       multiple={true}
-                      maxSize={25}
+                      maxSize={50}
                       onFilesChange={handleFileUpload}
-                      label="Add photos or videos"
+                      label="📱 Add photos or videos"
                     />
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button 
+              <CardFooter className="bg-gray-50 dark:bg-gray-800 rounded-b-lg">
+                <div className="flex gap-3 w-full">
+                  <Button 
                   variant="outline" 
                   onClick={() => setShowAddRecipe(false)}
+                    size="lg"
+                    className="flex-1"
                 >
                   Cancel
                 </Button>
@@ -198,9 +207,12 @@ function ComponentDemo() {
                   onClick={handleAddRecipe}
                   icon={<Save className="w-4 h-4" />}
                   disabled={!formData.recipeName.trim()}
+                    size="lg"
+                    className="flex-1"
                 >
                   Save Recipe
                 </Button>
+                </div>
               </CardFooter>
             </Card>
           </section>
@@ -209,14 +221,14 @@ function ComponentDemo() {
         <div className="space-y-12">
           {/* Interactive Recipe Management */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
-              Recipe Management
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+              🍽️ Recipe Collection
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card interactive onClick={() => toggleRecipe('Avocado Toast')}>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <Card interactive className="hover:scale-105 transition-transform duration-300" onClick={() => toggleRecipe('Avocado Toast')}>
                 <CardHeader 
-                  title="Avocado Toast"
-                  subtitle="Healthy • 5 mins"
+                  title="🥑 Avocado Toast"
+                  subtitle="Healthy • 5 mins • ⭐ 4.9"
                   action={
                     <div className="flex gap-2">
                       <Badge variant="success" size="sm">Vegan</Badge>
@@ -225,18 +237,21 @@ function ComponentDemo() {
                   }
                 />
                 <CardContent>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  <div className="aspect-video bg-gradient-to-br from-emerald-400 to-green-500 rounded-lg mb-4 flex items-center justify-center">
+                    <span className="text-white text-4xl">🥑</span>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">
                     Simple yet delicious avocado toast with a twist. Perfect for breakfast or a light lunch.
                   </p>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">👥 2 servings</span>
-                    <span className="font-medium text-emerald-600">⭐ 4.9</span>
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <span>👥 2 servings</span>
+                    <span>⏱️ 5 mins</span>
                   </div>
                 </CardContent>
-                <CardFooter border={false}>
+                <CardFooter>
                   <Button 
                     variant={savedRecipes.includes('Avocado Toast') ? "primary" : "outline"}
-                    size="sm" 
+                    size="md" 
                     fullWidth
                     icon={<Heart className="w-4 h-4" />}
                     onClick={(e) => {
@@ -249,37 +264,44 @@ function ComponentDemo() {
                 </CardFooter>
               </Card>
 
-              <Card interactive>
+              <Card interactive className="hover:scale-105 transition-transform duration-300">
                 <CardHeader 
-                  title="Upload Recipe Media"
-                  subtitle="Add photos or videos"
+                  title="📸 Upload Recipe Media"
+                  subtitle="Add stunning photos or videos"
                 />
                 <CardContent>
+                  <div className="aspect-video bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg mb-4 flex items-center justify-center">
+                    <Camera className="w-12 h-12 text-white" />
+                  </div>
                   <FileUpload
                     variant="compact"
                     accept="image/*"
                     multiple={true}
-                    maxSize={5}
+                    maxSize={10}
                     onFilesChange={(files) => {
                       console.log('Recipe images:', files);
+                      alert(`${files.length} photo(s) uploaded successfully! 📸`);
                     }}
                     label="Upload recipe photos"
                   />
                 </CardContent>
                 <CardFooter>
-                  <Button size="sm" variant="outline" fullWidth>
+                  <Button size="md" variant="primary" fullWidth>
                     <Camera className="w-4 h-4" />
-                    Add More Photos
+                    Take Photo
                   </Button>
                 </CardFooter>
               </Card>
 
-              <Card interactive>
+              <Card interactive className="hover:scale-105 transition-transform duration-300">
                 <CardHeader 
-                  title="Cooking Video"
+                  title="🎥 Cooking Video"
                   subtitle="Step-by-step tutorial"
                 />
                 <CardContent>
+                  <div className="aspect-video bg-gradient-to-br from-red-400 to-pink-500 rounded-lg mb-4 flex items-center justify-center">
+                    <Video className="w-12 h-12 text-white" />
+                  </div>
                   <FileUpload
                     variant="compact"
                     accept="video/*"
@@ -287,14 +309,15 @@ function ComponentDemo() {
                     maxSize={50}
                     onFilesChange={(files) => {
                       console.log('Recipe video:', files);
+                      alert(`Video "${files[0]?.name}" uploaded successfully! 🎥`);
                     }}
                     label="Upload cooking video"
                   />
                 </CardContent>
                 <CardFooter>
-                  <Button size="sm" variant="primary" fullWidth>
+                  <Button size="md" variant="primary" fullWidth>
                     <Video className="w-4 h-4" />
-                    Add Video Tutorial
+                    Record Video
                   </Button>
                 </CardFooter>
               </Card>
@@ -303,15 +326,21 @@ function ComponentDemo() {
 
           {/* Buttons Section */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Interactive Buttons</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+              🎛️ Interactive Components
+            </h2>
             <div className="grid gap-6">
               {/* Recipe Action Buttons */}
-              <Card>
-                <CardHeader title="Recipe Action Buttons" />
+              <Card variant="elevated">
+                <CardHeader 
+                  title="🚀 Recipe Action Buttons" 
+                  subtitle="Click any button to see it in action"
+                />
                 <CardContent>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-4 justify-center">
                     <Button 
                       variant="primary"
+                      size="lg"
                       onClick={() => alert('Starting cooking mode!')}
                       icon={<Utensils className="w-4 h-4" />}
                     >
@@ -319,6 +348,7 @@ function ComponentDemo() {
                     </Button>
                     <Button 
                       variant="secondary"
+                      size="lg"
                       onClick={() => alert('Adding to shopping list!')}
                       icon={<ShoppingCart className="w-4 h-4" />}
                     >
@@ -326,6 +356,7 @@ function ComponentDemo() {
                     </Button>
                     <Button 
                       variant="outline"
+                      size="lg"
                       onClick={() => alert('Sharing recipe!')}
                     >
                       Share Recipe
@@ -335,14 +366,18 @@ function ComponentDemo() {
               </Card>
 
               {/* Button States */}
-              <Card>
-                <CardHeader title="Button States & Loading" />
+              <Card variant="elevated">
+                <CardHeader 
+                  title="⚡ Button States & Loading" 
+                  subtitle="See different button states in action"
+                />
                 <CardContent>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-wrap gap-4 justify-center">
                     <Button 
                       loading={loading} 
                       onClick={handleSubmit}
                       variant="primary"
+                      size="lg"
                     >
                       {loading ? 'Saving Recipe...' : 'Save Recipe'}
                     </Button>
@@ -350,6 +385,7 @@ function ComponentDemo() {
                       icon={<Heart className="w-4 h-4" />} 
                       variant="outline"
                       onClick={() => alert('Recipe liked!')}
+                      size="lg"
                     >
                       Like Recipe
                     </Button>
@@ -357,6 +393,7 @@ function ComponentDemo() {
                       icon={<Plus className="w-4 h-4" />} 
                       variant="primary"
                       onClick={() => setShowAddRecipe(true)}
+                      size="lg"
                     >
                       Add Recipe
                     </Button>
@@ -368,15 +405,20 @@ function ComponentDemo() {
 
           {/* Input Section with Functionality */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Interactive Inputs</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+              📝 Interactive Forms
+            </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {/* Search Input */}
-              <Card>
-                <CardHeader title="Recipe Search" />
+              <Card variant="elevated">
+                <CardHeader 
+                  title="🔍 Recipe Search" 
+                  subtitle="Find your favorite recipes instantly"
+                />
                 <CardContent>
                   <Input
                     label="Search Recipes"
-                    placeholder="Search for recipes..."
+                    placeholder="Try 'chocolate', 'pasta', 'healthy'..."
                     leftIcon={<Search className="w-4 h-4" />}
                     value={formData.search}
                     onChange={(e) => {
@@ -384,13 +426,18 @@ function ComponentDemo() {
                       console.log('Searching for:', e.target.value);
                     }}
                     helperText={formData.search ? `Searching for "${formData.search}"` : "Type to search recipes"}
+                    variant="filled"
+                    inputSize="lg"
                   />
                 </CardContent>
               </Card>
 
               {/* Login Form */}
-              <Card>
-                <CardHeader title="Chef Login" />
+              <Card variant="elevated">
+                <CardHeader 
+                  title="👨‍🍳 Chef Login" 
+                  subtitle="Access your recipe collection"
+                />
                 <CardContent>
                   <div className="space-y-4">
                     <Input
@@ -400,6 +447,8 @@ function ComponentDemo() {
                       leftIcon={<Mail className="w-4 h-4" />}
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      variant="filled"
+                      inputSize="lg"
                     />
                     <Input
                       label="Password"
@@ -417,12 +466,15 @@ function ComponentDemo() {
                       }
                       value={formData.password}
                       onChange={(e) => setFormData({...formData, password: e.target.value})}
+                      variant="filled"
+                      inputSize="lg"
                     />
                   </div>
                 </CardContent>
                 <CardFooter>
                   <Button 
                     fullWidth 
+                    size="lg"
                     onClick={() => alert(`Logging in ${formData.email}`)}
                     disabled={!formData.email || !formData.password}
                   >

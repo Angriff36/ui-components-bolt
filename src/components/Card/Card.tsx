@@ -37,7 +37,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       'transition-all duration-200',
       // Touch-friendly for interactive cards
       interactive ? 'cursor-pointer touch-manipulation' : '',
-      interactive ? 'active:scale-[0.98]' : '',
+      interactive ? 'hover:shadow-xl active:scale-[0.98]' : '',
       // Width
       fullWidth ? 'w-full' : '',
       // Better focus styles for interactive cards
@@ -48,19 +48,19 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       default: [
         'bg-white border border-gray-200',
         'dark:bg-gray-900 dark:border-gray-700',
-        interactive ? 'hover:shadow-md hover:border-gray-300' : '',
+        interactive ? 'hover:shadow-lg hover:border-emerald-300' : '',
         interactive ? 'dark:hover:border-gray-600' : '',
       ],
       outlined: [
         'bg-white border-2 border-gray-300',
         'dark:bg-gray-900 dark:border-gray-600',
-        interactive ? 'hover:border-emerald-500 hover:shadow-md' : '',
+        interactive ? 'hover:border-emerald-500 hover:shadow-lg' : '',
         interactive ? 'dark:hover:border-emerald-400' : '',
       ],
       elevated: [
         'bg-white shadow-lg border border-gray-100',
         'dark:bg-gray-900 dark:border-gray-800',
-        interactive ? 'hover:shadow-xl' : '',
+        interactive ? 'hover:shadow-2xl hover:-translate-y-1' : '',
       ],
       filled: [
         'bg-gray-50 border border-gray-200',

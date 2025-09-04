@@ -32,6 +32,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'focus:outline-none focus:ring-2 focus:ring-offset-2',
       'disabled:opacity-50 disabled:cursor-not-allowed',
       'active:scale-95 touch-manipulation', // iOS active state
+      'hover:shadow-md transition-shadow', // Enhanced hover effects
       'min-h-[44px] min-w-[44px]', // iOS minimum touch target
       // Prevent text selection on buttons
       'select-none',
